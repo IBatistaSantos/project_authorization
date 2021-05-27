@@ -1,0 +1,26 @@
+[
+  {
+    "name": "default",
+    "type": "postgres",
+    "host": "localhost",
+    "port": 5432,
+    "username": "docker",
+    "password": "password",
+    "database": "project_controls",
+    "entities": ["./src/infra/database/typeorm/entities/**/*.ts"],
+    "migrations": ["./src/infra/database/typeorm/migrations/*.ts"],
+    "cli": {
+      "migrationsDir": "./src/infra/database/typeorm/migrations"
+    }
+  },
+  {
+    "name": "test",
+    "type": "sqlite",
+    "database": "project_controls_test",
+    "entities": ["./src/infra/database/typeorm/entities/**/*.ts"],
+    "migrations": ["./src/infra/database/typeorm/migrations/*.ts"],
+    "cli": {
+      "migrationsDir": "./src/infra/database/typeorm/migrations"
+    }
+  }
+]
