@@ -4,5 +4,5 @@ import { RoleRepository } from "@/infra/database/typeorm/repositories/RoleReposi
 export const makeDbCreateRole = (): DbCreateRole => {
   const roleRepository = new RoleRepository();
 
-  return new DbCreateRole(roleRepository, roleRepository);
+  return new DbCreateRole(roleRepository);
 };

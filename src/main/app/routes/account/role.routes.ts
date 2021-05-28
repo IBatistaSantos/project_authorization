@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import { adapterRoute } from "../../adapters/express/expressRouteAdapter";
-import { makeCreateRoleController } from "../../factories/controller/role/roleController";
+import { makeCreateRoleController } from "../../factories/controller/account/roleController";
 
 const roleRouter = Router();
 

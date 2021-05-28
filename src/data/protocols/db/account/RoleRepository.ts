@@ -1,8 +1,9 @@
 import { RoleModel } from "@/domain/models/Role";
 import { CreateRoleParams } from "@/domain/useCases/account/CreateRole";
 
-interface ICreateRoleRepository {
+interface IRoleRepository {
   create({ name, description }: CreateRoleParams): Promise<RoleModel>;
+  loadRoleByName(name: string): Promise<RoleModel | null>;
 }
 
-export { ICreateRoleRepository };
+export { IRoleRepository };

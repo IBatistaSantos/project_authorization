@@ -1,16 +1,11 @@
-import {
-  ICreateRoleRepository,
-  ILoadRoleByNameRepository,
-} from "@/data/useCases/account/createRole/DbCreateRoleProtocols";
+import { IRoleRepository } from "@/data/useCases/account/createRole/DbCreateRoleProtocols";
 import { RoleModel } from "@/domain/models/Role";
 import { CreateRoleParams } from "@/domain/useCases/account/CreateRole";
 import { getRepository, Repository } from "typeorm";
 
 import { Role } from "../entities/Role";
 
-class RoleRepository
-  implements ICreateRoleRepository, ILoadRoleByNameRepository
-{
+class RoleRepository implements IRoleRepository {
   private readonly rolesRepository: Repository<Role>;
 
   constructor() {
