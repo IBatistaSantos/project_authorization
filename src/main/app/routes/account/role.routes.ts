@@ -9,4 +9,4 @@ const createRoleController = makeCreateRoleController();
 
 roleRouter.post("/", adapterRoute(createRoleController));
 
-export default roleRouter;
+export { roleRouter };

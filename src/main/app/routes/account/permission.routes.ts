@@ -9,4 +9,4 @@ const createPermissionController = makeCreatePermisssionController();
 
 permissionRouter.post("/", adapterRoute(createPermissionController));
 
-export default permissionRouter;
+export { permissionRouter };
