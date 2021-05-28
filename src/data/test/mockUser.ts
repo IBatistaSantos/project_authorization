@@ -5,27 +5,19 @@ import { IDecrypter } from "../protocols/crypto/Decrypter";
 import { IEncrypter } from "../protocols/crypto/Encrypter";
 import { IHashComparer } from "../protocols/crypto/HashComparer";
 import { IHasher } from "../protocols/crypto/Hasher";
-import { ICreateAccountRepository } from "../protocols/db/account/CreateUserRepository";
-import { ILoadUserByEmailRepository } from "../protocols/db/account/LoadUserByEmailRepository";
+import { IUserRepository } from "../protocols/db/account/UserRepository";
 
-export const mockCreateUserRepository = (): ICreateAccountRepository => {
-  class CreateUserRepositoryStub implements ICreateAccountRepository {
+export const mockUserRepository = (): IUserRepository => {
+  class CreateUserRepositoryStub implements IUserRepository {
+    async loadByEmail(): Promise<UserModel | null> {
+      return mockUserModel();
+    }
     async create(): Promise<UserModel> {
       return mockUserModel();
     }
   }
 
   return new CreateUserRepositoryStub();
-};
-
-export const mockLoadUserByEmailRepository = (): ILoadUserByEmailRepository => {
-  class LoadUserByEmailRepositoryStub implements ILoadUserByEmailRepository {
-    async loadByEmail(): Promise<UserModel | null> {
-      return mockUserModel();
-    }
-  }
-
-  return new LoadUserByEmailRepositoryStub();
 };
 
 export const mockHashComparer = (): IHashComparer => {

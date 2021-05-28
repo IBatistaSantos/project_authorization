@@ -3,28 +3,33 @@ import {
   ICreateAccount,
   CreateAccountParams,
   UserModel,
-  ICreateAccountRepository,
-  ILoadUserByEmailRepository,
+  IUserRepository,
 } from "./DbCreateuserProtocols";
 
 class DbCreateUser implements ICreateAccount {
   constructor(
     private readonly hasher: IHasher,
-    private readonly createAccountRepository: ICreateAccountRepository,
-    private readonly loadAccountByEmailRepository: ILoadUserByEmailRepository
+    private readonly usersRepository: IUserRepository
   ) {}
 
-  async create(accountData: CreateAccountParams): Promise<UserModel | null> {
-    const findUser = await this.loadAccountByEmailRepository.loadByEmail(
-      accountData.email
-    );
+  async create({
+    name,
+    email,
+    password,
+    permissions,
+    roles,
+  }: CreateAccountParams): Promise<UserModel | null> {
+    const findUser = await this.usersRepository.loadByEmail(email);
 
     if (!findUser) {
-      const hashedPassword = await this.hasher.generate(accountData.password);
+      const hashedPassword = await this.hasher.generate(password);
 
-      const user = await this.createAccountRepository.create({
-        ...accountData,
+      const user = await this.usersRepository.create({
+        name,
+        email,
         password: hashedPassword,
+        permissions,
+        roles,
       });
 
       return user;

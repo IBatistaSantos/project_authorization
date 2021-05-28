@@ -1,44 +1,31 @@
-import {
-  mockCreateUserRepository,
-  mockHasher,
-  mockLoadUserByEmailRepository,
-} from "@/data/test";
+import { mockUserRepository, mockHasher } from "@/data/test";
 import { mockUserModel, mockCreateAccountParams } from "@/domain/test";
 
 import { DbCreateUser } from "./DbCreateUser";
 
 const makeSut = () => {
-  const loadUserByEmailRepositoryStub = mockLoadUserByEmailRepository();
+  const mockUserRepositoryStub = mockUserRepository();
 
   jest
-    .spyOn(loadUserByEmailRepositoryStub, "loadByEmail")
+    .spyOn(mockUserRepositoryStub, "loadByEmail")
     .mockReturnValue(Promise.resolve(null));
 
   const hasherStub = mockHasher();
-  const createUserRepositoryStub = mockCreateUserRepository();
 
-  const sut = new DbCreateUser(
-    hasherStub,
-    createUserRepositoryStub,
-    loadUserByEmailRepositoryStub
-  );
+  const sut = new DbCreateUser(hasherStub, mockUserRepositoryStub);
 
   return {
     sut,
-    loadUserByEmailRepositoryStub,
-    createUserRepositoryStub,
+    mockUserRepositoryStub,
     hasherStub,
   };
 };
 
 describe("DbCreateUser Test", () => {
   it("should call LoadUserByEmailRepository with correct value", async () => {
-    const { sut, loadUserByEmailRepositoryStub } = makeSut();
+    const { sut, mockUserRepositoryStub } = makeSut();
 
-    const repositorySpy = jest.spyOn(
-      loadUserByEmailRepositoryStub,
-      "loadByEmail"
-    );
+    const repositorySpy = jest.spyOn(mockUserRepositoryStub, "loadByEmail");
 
     const createUserParams = mockCreateAccountParams();
 
@@ -48,20 +35,20 @@ describe("DbCreateUser Test", () => {
   });
 
   it("should throw if LoadUserByEmailRepository throws", async () => {
-    const { sut, loadUserByEmailRepositoryStub } = makeSut();
+    const { sut, mockUserRepositoryStub } = makeSut();
 
     jest
-      .spyOn(loadUserByEmailRepositoryStub, "loadByEmail")
+      .spyOn(mockUserRepositoryStub, "loadByEmail")
       .mockReturnValueOnce(Promise.reject(new Error()));
 
     await expect(sut.create(mockCreateAccountParams())).rejects.toThrow();
   });
 
   it("should return null if LoadUserByEmail repository finds one", async () => {
-    const { sut, loadUserByEmailRepositoryStub } = makeSut();
+    const { sut, mockUserRepositoryStub } = makeSut();
 
     jest
-      .spyOn(loadUserByEmailRepositoryStub, "loadByEmail")
+      .spyOn(mockUserRepositoryStub, "loadByEmail")
       .mockReturnValueOnce(Promise.resolve(mockUserModel()));
 
     const response = await sut.create(mockCreateAccountParams());
@@ -70,9 +57,9 @@ describe("DbCreateUser Test", () => {
   });
 
   it("should call CreateUserRepository with correct values", async () => {
-    const { sut, createUserRepositoryStub } = makeSut();
+    const { sut, mockUserRepositoryStub } = makeSut();
 
-    const repositorySpy = jest.spyOn(createUserRepositoryStub, "create");
+    const repositorySpy = jest.spyOn(mockUserRepositoryStub, "create");
 
     const createUserParams = mockCreateAccountParams();
 
@@ -82,10 +69,10 @@ describe("DbCreateUser Test", () => {
   });
 
   it("should throw if CreateUserRepository throws", async () => {
-    const { sut, createUserRepositoryStub } = makeSut();
+    const { sut, mockUserRepositoryStub } = makeSut();
 
     jest
-      .spyOn(createUserRepositoryStub, "create")
+      .spyOn(mockUserRepositoryStub, "create")
       .mockReturnValueOnce(Promise.reject(new Error()));
 
     await expect(sut.create(mockCreateAccountParams())).rejects.toThrow();

@@ -1,8 +1,16 @@
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+
+import { Permission } from "./Permission";
 
 @Entity("users")
 class User {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn("uuid")
   id: string;
 
   @Column()
@@ -13,6 +21,14 @@ class User {
 
   @Column()
   password: string;
+
+  @ManyToMany(() => Permission)
+  @JoinTable({
+    name: "user_permission",
+    joinColumns: [{ name: "user_id" }],
+    inverseJoinColumns: [{ name: "permission_id" }],
+  })
+  permission: Permission[];
 }
 
 export { User };
