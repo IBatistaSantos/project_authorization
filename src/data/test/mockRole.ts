@@ -6,7 +6,7 @@ import {
   ILoadRoleByNameRepository,
 } from "../useCases/account/createRole/DbCreateRoleProtocols";
 
-export const mockCreateRoleRepository = () => {
+export const mockCreateRoleRepository = (): ICreateRoleRepository => {
   class CreateRoleRepositoryStub implements ICreateRoleRepository {
     async create(): Promise<RoleModel> {
       return mockRoleModel();
@@ -16,7 +16,7 @@ export const mockCreateRoleRepository = () => {
   return new CreateRoleRepositoryStub();
 };
 
-export const mockLoadRoleByNameRepository = () => {
+export const mockLoadRoleByNameRepository = (): ILoadRoleByNameRepository => {
   class LoadRoleByNameRepositoryStub implements ILoadRoleByNameRepository {
     async loadRoleByName(): Promise<RoleModel | null> {
       return mockRoleModel();

@@ -8,7 +8,7 @@ import { IHasher } from "../protocols/crypto/Hasher";
 import { ICreateAccountRepository } from "../protocols/db/account/CreateUserRepository";
 import { ILoadUserByEmailRepository } from "../protocols/db/account/LoadUserByEmailRepository";
 
-export const mockCreateUserRepository = () => {
+export const mockCreateUserRepository = (): ICreateAccountRepository => {
   class CreateUserRepositoryStub implements ICreateAccountRepository {
     async create(): Promise<UserModel> {
       return mockUserModel();
@@ -18,7 +18,7 @@ export const mockCreateUserRepository = () => {
   return new CreateUserRepositoryStub();
 };
 
-export const mockLoadUserByEmailRepository = () => {
+export const mockLoadUserByEmailRepository = (): ILoadUserByEmailRepository => {
   class LoadUserByEmailRepositoryStub implements ILoadUserByEmailRepository {
     async loadByEmail(): Promise<UserModel | null> {
       return mockUserModel();
@@ -28,7 +28,7 @@ export const mockLoadUserByEmailRepository = () => {
   return new LoadUserByEmailRepositoryStub();
 };
 
-export const mockHashComparer = () => {
+export const mockHashComparer = (): IHashComparer => {
   class HashComparerStub implements IHashComparer {
     async compare(): Promise<boolean> {
       return true;
@@ -38,7 +38,7 @@ export const mockHashComparer = () => {
   return new HashComparerStub();
 };
 
-export const mockHasher = () => {
+export const mockHasher = (): IHasher => {
   class HasherStub implements IHasher {
     async generate(value: string): Promise<string> {
       return value;
@@ -48,7 +48,7 @@ export const mockHasher = () => {
   return new HasherStub();
 };
 
-export const mockEncrypter = () => {
+export const mockEncrypter = (): IEncrypter => {
   class EncrypterStub implements IEncrypter {
     async encrypt(): Promise<string> {
       return "encryptedvalue";
@@ -58,7 +58,7 @@ export const mockEncrypter = () => {
   return new EncrypterStub();
 };
 
-export const mockDecrypter = () => {
+export const mockDecrypter = (): IDecrypter => {
   class DecrypterStub implements IDecrypter {
     async decrypt(): Promise<any> {
       return { userId: 1 };
