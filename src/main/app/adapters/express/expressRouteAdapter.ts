@@ -1,16 +1,14 @@
-import { Request, request, Response } from "express"
-import { Controller, HttpRequest } from "../../../presentation/protocols"
+import { Request, Response } from "express";
 
+import { IController, HttpRequest } from "../../../../presentation/protocols";
 
-
-
-export const adapterRoute = (controller: Controller) => {
+export const adapterRoute = (controller: IController) => {
   return async (request: Request, response: Response): Promise<Response> => {
-    const httpRequest: HttpRequest =  {
+    const httpRequest: HttpRequest = {
       body: request.body,
       params: request.params,
       userId: request.userId,
-    }
+    };
 
     const httpResponse = await controller.handle(httpRequest);
 
@@ -21,6 +19,5 @@ export const adapterRoute = (controller: Controller) => {
     }
 
     return response.status(statusCode).json(body);
-    
-  }
-}
+  };
+};

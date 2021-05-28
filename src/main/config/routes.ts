@@ -6,7 +6,7 @@ export default (app: Express): void => {
   const router = Router();
   app.use("/api", router);
 
-  const routesPath = path.resolve(__dirname, "..", "routes");
+  const routesPath = path.resolve(__dirname, "..", "app", "routes");
   readdirSync(routesPath)
     .filter((file) => !file.includes(".spec.") && !file.endsWith(".map"))
     .map(async (file) => {
