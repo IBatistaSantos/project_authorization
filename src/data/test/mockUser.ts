@@ -1,5 +1,6 @@
 import { UserModel } from "@/domain/models/User";
 import { mockUserModel } from "@/domain/test";
+import { AuthenticationParams } from "@/domain/useCases/account/IAuthenticateUser";
 
 import { IDecrypter } from "../protocols/crypto/Decrypter";
 import { IEncrypter } from "../protocols/crypto/Encrypter";
@@ -19,6 +20,11 @@ export const mockUserRepository = (): IUserRepository => {
 
   return new CreateUserRepositoryStub();
 };
+
+export const mockAuthenticationParams = (): AuthenticationParams => ({
+  email: "anymail@mail.com",
+  password: "anypassword",
+});
 
 export const mockHashComparer = (): IHashComparer => {
   class HashComparerStub implements IHashComparer {
