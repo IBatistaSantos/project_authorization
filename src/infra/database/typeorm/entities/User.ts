@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 
-import { Permission } from "./Permission";
+import { Role } from "./Role";
 
 @Entity("users")
 class User {
@@ -22,13 +22,13 @@ class User {
   @Column()
   password: string;
 
-  @ManyToMany(() => Permission)
+  @ManyToMany(() => Role)
   @JoinTable({
-    name: "user_permission",
+    name: "user_role",
     joinColumns: [{ name: "user_id" }],
-    inverseJoinColumns: [{ name: "permission_id" }],
+    inverseJoinColumns: [{ name: "role_id" }],
   })
-  permission: Permission[];
+  roles: Role[];
 }
 
 export { User };

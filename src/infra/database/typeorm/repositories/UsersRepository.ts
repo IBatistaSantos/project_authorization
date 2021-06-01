@@ -1,6 +1,8 @@
-import { IUserRepository } from "@/data/protocols/db/account/UserRepository";
+import {
+  ICreateUser,
+  IUserRepository,
+} from "@/data/protocols/db/account/UserRepository";
 import { UserModel } from "@/domain/models/User";
-import { CreateAccountParams } from "@/domain/useCases/account/CreateUser";
 import { getRepository, Repository } from "typeorm";
 
 import { User } from "../entities/User";
@@ -15,10 +17,15 @@ class UsersRepository implements IUserRepository {
     name,
     email,
     password,
-  }: CreateAccountParams): Promise<UserModel> {
+    roles,
+  }: ICreateUser): Promise<UserModel> {
     const user = this.usersRepository.create({ name, email, password });
-    await this.usersRepository.save(user);
 
+    if (roles) {
+      user.roles = roles;
+    }
+
+    await this.usersRepository.save(user);
     return user;
   }
   async loadByEmail(email: string): Promise<UserModel | null> {

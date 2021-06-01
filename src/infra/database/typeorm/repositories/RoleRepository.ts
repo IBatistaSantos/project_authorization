@@ -21,6 +21,11 @@ class RoleRepository implements IRoleRepository {
     return null;
   }
 
+  async loadRoleByIds(ids: string[]): Promise<RoleModel[]> {
+    const roles = await this.rolesRepository.findByIds(ids);
+    return roles;
+  }
+
   async create({ name, description }: CreateRoleParams): Promise<RoleModel> {
     const role = this.rolesRepository.create({ name, description });
     await this.rolesRepository.save(role);

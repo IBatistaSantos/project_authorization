@@ -11,13 +11,12 @@ class CreateUserController implements IController {
   constructor(private readonly createUser: ICreateAccount) {}
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const { name, email, password, roles, permissions } = httpRequest.body;
+      const { name, email, password, roles } = httpRequest.body;
       const user = await this.createUser.create({
         email,
         name,
         password,
         roles,
-        permissions,
       });
 
       if (!user) {

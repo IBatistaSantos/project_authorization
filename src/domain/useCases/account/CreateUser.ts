@@ -1,9 +1,14 @@
 import { UserModel } from "../../models/User";
 
-type CreateAccountParams = Omit<UserModel, "id">;
-
-interface ICreateAccount {
-  create(account: CreateAccountParams): Promise<UserModel | null>;
+interface ICreateAccountParams {
+  name: string;
+  email: string;
+  password: string;
+  roles: string[];
 }
 
-export { ICreateAccount, CreateAccountParams };
+interface ICreateAccount {
+  create(account: ICreateAccountParams): Promise<UserModel | null>;
+}
+
+export { ICreateAccount, ICreateAccountParams };

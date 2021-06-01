@@ -1,9 +1,17 @@
+import { RoleModel } from "@/domain/models/Role";
+
 import { UserModel } from "../../../../domain/models/User";
-import { CreateAccountParams } from "../../../../domain/useCases/account/CreateUser";
+
+interface ICreateUser {
+  name: string;
+  email: string;
+  password: string;
+  roles?: RoleModel[];
+}
 
 interface IUserRepository {
-  create(accountData: CreateAccountParams): Promise<UserModel>;
+  create(accountData: ICreateUser): Promise<UserModel>;
   loadByEmail(email: string): Promise<UserModel | null>;
 }
 
-export { IUserRepository };
+export { IUserRepository, ICreateUser };
