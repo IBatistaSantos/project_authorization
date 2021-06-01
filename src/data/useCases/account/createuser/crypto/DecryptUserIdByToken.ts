@@ -6,7 +6,6 @@ export class DecryptUserIdByToken implements ILoadUserIdByToken {
 
   async loadUserId(token: string): Promise<number | null> {
     const payload = await this.decrypter.decrypt(token);
-    console.log(payload);
     return payload ? payload.userId : null;
   }
 }

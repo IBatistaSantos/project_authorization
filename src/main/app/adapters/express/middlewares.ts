@@ -10,10 +10,10 @@ export const adaptMiddleware = (middleware: IMiddleware) => {
   ): Promise<any> => {
     const httpRequest: HttpRequest = {
       headers: request.headers,
+      userId: request.userId,
     };
 
     const httpResponse = await middleware.handle(httpRequest);
-
     const { statusCode, body } = httpResponse;
 
     if (statusCode !== 200) {

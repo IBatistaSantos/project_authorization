@@ -4,7 +4,7 @@ interface ICreateAccountParams {
   name: string;
   email: string;
   password: string;
-  roles: string[];
+  roles?: string[];
 }
 
 interface ICreateAccount {

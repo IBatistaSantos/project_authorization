@@ -12,6 +12,7 @@ interface ICreateUser {
 interface IUserRepository {
   create(accountData: ICreateUser): Promise<UserModel>;
   loadByEmail(email: string): Promise<UserModel | null>;
+  is(role: string, userId: string): Promise<boolean>;
 }
 
 export { IUserRepository, ICreateUser };

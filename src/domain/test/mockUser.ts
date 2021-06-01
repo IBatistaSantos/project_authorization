@@ -1,7 +1,7 @@
 import { UserModel } from "../models/User";
-import { CreateAccountParams } from "../useCases/account/CreateUser";
+import { ICreateAccountParams } from "../useCases/account/CreateUser";
 
-export const mockCreateAccountParams = (): CreateAccountParams => ({
+export const mockCreateAccountParams = (): ICreateAccountParams => ({
   name: "anyname",
   email: "anymail@mail.com",
   password: "anypassword",

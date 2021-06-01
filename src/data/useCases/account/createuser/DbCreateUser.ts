@@ -30,6 +30,7 @@ class DbCreateUser implements ICreateAccount {
       if (roles) {
         roleSave = await this.roleRepository.loadRoleByIds(roles);
       }
+
       const user = await this.usersRepository.create({
         name,
         email,

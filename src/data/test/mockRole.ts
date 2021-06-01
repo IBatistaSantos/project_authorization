@@ -11,6 +11,11 @@ export const mockRoleRepository = (): IRoleRepository => {
     async create(): Promise<RoleModel> {
       return mockRoleModel();
     }
+
+    async loadRoleByIds(): Promise<RoleModel[]> {
+      const array = new Array(mockRoleModel());
+      return array;
+    }
   }
 
   return new CreateRoleRepositoryStub();

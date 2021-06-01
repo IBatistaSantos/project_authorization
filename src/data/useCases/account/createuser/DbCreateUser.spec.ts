@@ -1,10 +1,12 @@
 import { mockUserRepository, mockHasher } from "@/data/test";
+import { mockRoleRepository } from "@/data/test/mockRole";
 import { mockUserModel, mockCreateAccountParams } from "@/domain/test";
 
 import { DbCreateUser } from "./DbCreateUser";
 
 const makeSut = () => {
   const mockUserRepositoryStub = mockUserRepository();
+  const mockRoleRepositoryStub = mockRoleRepository();
 
   jest
     .spyOn(mockUserRepositoryStub, "loadByEmail")
@@ -12,7 +14,11 @@ const makeSut = () => {
 
   const hasherStub = mockHasher();
 
-  const sut = new DbCreateUser(hasherStub, mockUserRepositoryStub);
+  const sut = new DbCreateUser(
+    hasherStub,
+    mockUserRepositoryStub,
+    mockRoleRepositoryStub
+  );
 
   return {
     sut,
@@ -65,7 +71,7 @@ describe("DbCreateUser Test", () => {
 
     await sut.create(createUserParams);
 
-    expect(repositorySpy).toHaveBeenCalledWith(createUserParams);
+    expect(repositorySpy).toHaveBeenCalled();
   });
 
   it("should throw if CreateUserRepository throws", async () => {

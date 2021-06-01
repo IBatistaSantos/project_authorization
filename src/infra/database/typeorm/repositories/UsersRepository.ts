@@ -13,6 +13,7 @@ class UsersRepository implements IUserRepository {
   constructor() {
     this.usersRepository = getRepository(User);
   }
+
   async create({
     name,
     email,
@@ -41,6 +42,24 @@ class UsersRepository implements IUserRepository {
 
     return null;
   }
-}
 
+  async is(role: string, userId: string): Promise<boolean> {
+    const roleName = role;
+    const user = await this.usersRepository.findOne({
+      where: { id: userId },
+      relations: ["roles"],
+    });
+
+    if (!user) {
+      return false;
+    }
+
+    const existsRoles = user.roles.find((role) => role.name === roleName);
+
+    if (existsRoles) {
+      return true;
+    }
+    return false;
+  }
+}
 export { UsersRepository };
