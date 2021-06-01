@@ -1,11 +1,12 @@
+import { UserModel } from "@/domain/models/User";
+
 export type AuthenticationParams = {
   email: string;
   password: string;
 };
 
 export type AuthenticationResponse = {
-  name: string;
-  email: string;
+  user: UserModel;
   token: string;
 };
 

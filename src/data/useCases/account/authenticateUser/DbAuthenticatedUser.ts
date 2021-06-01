@@ -22,11 +22,11 @@ export class DbAuthentication implements IAuthentication {
     const user = await this.userRepository.loadByEmail(email);
 
     if (user && (await this.hashComparer.compare(password, user.password))) {
-      const { id, name } = user;
+      const { id } = user;
 
       const token = await this.encrypter.encrypt(id);
 
-      return { email, name, token };
+      return { user, token };
     }
 
     return null;

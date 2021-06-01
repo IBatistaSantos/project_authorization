@@ -125,8 +125,7 @@ describe("DbAuthentication Test", () => {
     const response = await sut.auth(mockAuthenticationParams());
 
     expect(response).toBeTruthy();
-    expect(response).toHaveProperty("name");
-    expect(response).toHaveProperty("email");
     expect(response).toHaveProperty("token");
+    expect(response).toHaveProperty("user");
   });
 });
