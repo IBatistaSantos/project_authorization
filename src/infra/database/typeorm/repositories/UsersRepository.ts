@@ -19,11 +19,16 @@ class UsersRepository implements IUserRepository {
     email,
     password,
     roles,
+    permissions,
   }: ICreateUser): Promise<UserModel> {
     const user = this.usersRepository.create({ name, email, password });
 
     if (roles) {
       user.roles = roles;
+    }
+
+    if (permissions) {
+      user.permissions = permissions;
     }
 
     await this.usersRepository.save(user);
@@ -57,6 +62,25 @@ class UsersRepository implements IUserRepository {
     const existsRoles = user.roles.find((role) => role.name === roleName);
 
     if (existsRoles) {
+      return true;
+    }
+    return false;
+  }
+
+  async canPermission(permission: string, userId: string): Promise<boolean> {
+    const canPermission = await this.usersRepository.findOne({
+      where: { id: userId },
+      relations: ["permissions"],
+    });
+
+    if (!canPermission) {
+      return false;
+    }
+
+    const existsPermission = canPermission.permissions.find(
+      (pName) => pName.name === permission
+    );
+    if (existsPermission) {
       return true;
     }
     return false;
