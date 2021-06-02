@@ -1,4 +1,5 @@
 import { mockUserRepository, mockHasher } from "@/data/test";
+import { mockPermissionRepository } from "@/data/test/mockPermission";
 import { mockRoleRepository } from "@/data/test/mockRole";
 import { mockUserModel, mockCreateAccountParams } from "@/domain/test";
 
@@ -7,6 +8,7 @@ import { DbCreateUser } from "./DbCreateUser";
 const makeSut = () => {
   const mockUserRepositoryStub = mockUserRepository();
   const mockRoleRepositoryStub = mockRoleRepository();
+  const mockPermissionRepositoryStub = mockPermissionRepository();
 
   jest
     .spyOn(mockUserRepositoryStub, "loadByEmail")
@@ -17,7 +19,8 @@ const makeSut = () => {
   const sut = new DbCreateUser(
     hasherStub,
     mockUserRepositoryStub,
-    mockRoleRepositoryStub
+    mockRoleRepositoryStub,
+    mockPermissionRepositoryStub
   );
 
   return {

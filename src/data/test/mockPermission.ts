@@ -5,6 +5,10 @@ import { IPermissionRepository } from "../protocols/db/account/PermissionReposit
 
 export const mockPermissionRepository = (): IPermissionRepository => {
   class CreatePermissiobRepositoryStub implements IPermissionRepository {
+    async loadPermissionByIds(): Promise<PermissionModel[]> {
+      const array = new Array(mockPermissionModel());
+      return array;
+    }
     async loadPermissionByName(): Promise<PermissionModel | null> {
       return mockPermissionModel();
     }
