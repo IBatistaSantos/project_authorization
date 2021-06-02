@@ -5,6 +5,7 @@ interface ICreateAccountParams {
   email: string;
   password: string;
   roles?: string[];
+  permissions?: string[];
 }
 
 interface ICreateAccount {
