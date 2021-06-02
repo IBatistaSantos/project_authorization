@@ -6,11 +6,7 @@ class DbIsRoleUser implements IIsRoleUser {
 
   async isRoleUser(roleName: string, userId: string): Promise<boolean> {
     const is = await this.usersRepository.is(roleName, userId);
-    if (is) {
-      return true;
-    }
-    return false;
+    return is;
   }
 }
-
 export { DbIsRoleUser };
